@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="eraser.svg">icons/eraser.svg</file>
+        <file alias="line.svg">icons/line.svg</file>
+        <file alias="pencil.svg">icons/pencil.svg</file>
+        <file alias="plus.svg">icons/plus.svg</file>
+    </qresource>
+</RCC>

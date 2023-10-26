@@ -1,0 +1,49 @@
+cmake_minimum_required(VERSION 3.16)
+
+set(EXECUTABLE_NAME "RisoVat")
+
+project(${EXECUTABLE_NAME} VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD 20)
+
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
+
+qt_standard_project_setup(REQUIRES 6.5)
+
+qt_add_resources(IMAGE_RESOURCES images.qrc)
+
+file(GLOB CPP_SOURCES *.cpp)
+file(GLOB HPP_SOURCES *.h)
+
+qt_add_executable(${EXECUTABLE_NAME}
+   ${HPP_SOURCES}
+   ${CPP_SOURCES}
+   ${IMAGE_RESOURCES}
+)
+
+file(GLOB QML_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} qml/*.qml)
+source_group("Qml Files" FILES ${QML_SOURCES})
+
+qt_add_qml_module(${EXECUTABLE_NAME}
+    URI ${EXECUTABLE_NAME}
+    RESOURCE_PREFIX /
+    VERSION 1.0
+    QML_FILES ${QML_SOURCES}
+)
+
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES
+    MACOSX_BUNDLE FALSE
+    WIN32_EXECUTABLE TRUE
+)
+
+target_link_libraries(${EXECUTABLE_NAME}
+    PRIVATE Qt6::Quick
+)
+
+install(TARGETS ${EXECUTABLE_NAME}
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
